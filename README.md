@@ -16,22 +16,30 @@ reservations, payment method, and total are kept in records.
 
 
 # Entities
-Gallery: contains the gallery id, name, address, and size this information is to identify 
-each gallery.
-Staff: has ids, names, phone, and emails to communicate with them and a single staff 
-can have many skills 
+Gallery: contains the gallery id, name, address, and size this information is to identify each gallery.
+
+Staff: has ids, names, phone, and emails to communicate with them and a single staff can have many skills 
+
 Staff_skill: shows the skills of each employee.
+
 Painting: is identified by a number has a size.
-Artist: identified by id, has a name, email, phone, and each artist has a distinct type of 
-art.
+
+Artist: identified by id, has a name, email, phone, and each artist has a distinct type of art.
+
 Reservation: has a number, payment method and the date of reservation.
-Visitor: every visitor to the museum is identified uniquely by an id has a name, email, 
-and phone number.
+
+Visitor: every visitor to the museum is identified uniquely by an id has a name, email, and phone number.
 
 # Functional Dependency
- gallery_id#, ->gallery_name, gallery_address, length, width
+
+gallery_id#, ->gallery_name, gallery_address, length, width
+
 staff_id# -> staff_name, date_of_birth, salary, staff phone, staff_emial
+
 visitor_id# -> visitor_name, visitor_phone, visitor_email
+
 staff_id#, skill# -> skill
+
 res_no# -> payment_method, total
+
 painting_number# -> height, width, artist_id#, artist_name, artist_phone, artist_email, type_of_art
