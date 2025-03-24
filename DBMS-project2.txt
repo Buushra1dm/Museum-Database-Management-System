@@ -1,0 +1,313 @@
+create table reservation 
+(
+    res_no number(4), 
+    gallery_id number(2),
+    visitor_id number(3), 
+    payment_method varchar2(30), 
+    total number(4)
+); 
+
+create table visitor
+(
+    visitor_id number(3),
+    gallery_id number(2),  
+    vname varchar2(20), 
+    vemail varchar2(50) unique, 
+    vphone varchar2(10) not null
+); 
+
+create table staff
+(
+    staff_id number(5), 
+    gallery_id number(2), 
+    sname varchar2(30), 
+    salary number(6),
+    date_of_Birth date,
+    semail varchar2(50) unique, 
+    sphone varchar2(10) not null
+); 
+
+create table staff_skill
+(
+    staff_id number(5), 
+    skill varchar2(50)
+); 
+
+create table gallery
+(
+    gallery_id number(2), 
+    gname varchar2(20), 
+    address varchar2(30), 
+    glength varchar2(10), 
+    width varchar2(10)
+); 
+
+
+create table painting
+(
+    pnumber number(2),  
+    gallery_id number(2), 
+    artist_id number(4), 
+    height number(10), 
+    width number(10)
+); 
+
+create table artist
+(
+    artist_id number(4), 
+    artist_name varchar2(30), 
+    artist_email varchar2(50)not null, 
+    aphone varchar2(10) unique, 
+    type_of_art varchar2(30)
+); 
+
+alter table reservation 
+add constraint res_pk primary key(res_no); 
+
+alter table visitor
+add constraint vis_pk primary key(visitor_id); 
+
+alter table staff
+add constraint staff_pk primary key(staff_id); 
+
+alter table staff_skill
+add constraint sikll_pk primary key(staff_id,skill); 
+
+alter table gallery
+add constraint gall_pk primary key(gallery_id); 
+
+alter table painting
+add constraint paint_pk primary key(pnumber); 
+
+alter table artist 
+add constraint art_pk primary key(artist_id); 
+
+
+alter table reservation 
+add constraint res_vis_fk foreign key(visitor_id) references visitor(visitor_id) on delete cascade; 
+
+alter table reservation 
+add constraint res_gall_fk foreign key(gallery_id) references gallery(gallery_id); 
+
+alter table visitor 
+add constraint vis_gal_fk foreign key(gallery_id) references gallery(gallery_id); 
+
+alter table staff
+add constraint staff_gal_fk foreign key(gallery_id) references gallery(gallery_id); 
+
+alter table staff_skill
+add constraint skill_staff_fk foreign key(staff_id) references staff(staff_id); 
+
+alter table painting
+add constraint paint_arti_fk foreign key(artist_id) references artist(artist_id); 
+
+--gallery id missing.
+
+insert into gallery values(01,'Antiquities','North','600m','300m');
+insert into gallery values(02,'Mural','North','600m','600m');
+insert into gallery values(03,'Artvago','South','400m','300m');
+insert into gallery values(04,'Clip Art','South','500m','500m');
+insert into gallery values(05,'Craftric','South','600m','500m');
+insert into gallery values(06,'Piece of Work','East','800m','400m');
+insert into gallery values(07,'Global Art','West','800m','400m');
+
+insert into visitor values(100,01,'Bushra','bobo123@gmail.com','0558805088');
+insert into visitor values(101,05,'Sara','S2002@gmail.com','0559994405');
+insert into visitor values(102,07,'Ali','Ali@gmail.com','0554464598');
+insert into visitor values(103,05,'Adeem','Adeem@gmail.com','0553456789');
+insert into visitor values(104,03,'Noor','Noor@gmail.com','0552314589');
+insert into visitor values(105,02,'Ghanem','Gh55@gmail.com','0558565755');
+insert into visitor values(106,04,'Mohammad','Mohammad@gmail.com','0557788991');
+
+insert into reservation values(1000,01,100,'Credit Card',60);
+insert into reservation values(1001,03,101,'Apple pay',15);
+insert into reservation values(1002,04,103,'cache',30);
+insert into reservation values(1003,06,104,'Apple pay',75);
+insert into reservation values(1004,06,101,'Credit Card',15);
+insert into reservation values(1005,07,105,'Apple pay',30);
+
+insert into staff values(00001,01,'Ahmed',10000,'28-SEP-22','Ahmed10@gmail.com','0551021314');
+insert into staff values(00002,02,'Amir',50000,'20-FEB-21','Amir20@gmail.com','0557766889');
+insert into staff values(00003,03,'Khalil',15000,'19-SEP-20','Khalil30@gmail.com','0556644894');
+insert into staff values(00004,04,'Nasir',320000,'28-FEB-23','Nasir40@gmail.com','0556543278');
+insert into staff values(00005,05,'Jawad',20000,'15-APR-21','Jawad50@gmail.com','0551456732');
+insert into staff values(00006,06,'Salah',27000,'20-MAY-22','Salah60@gmail.com','0553457892');
+insert into staff values(00007,07,'Zaid',30000,'01-MAY-21','Zaid70@gmail.com','0554327652');
+
+insert into staff_skill values(00001,'Critical thinking');
+insert into staff_skill values(00002,'Teamwork and collaboration');
+insert into staff_skill values(00003,'Teamwork and collaboration');
+insert into staff_skill values(00004,'Leadership');
+insert into staff_skill values(00005,'Professionalism and strong work ethic');
+insert into staff_skill values(00006,'Teamwork and collaboration');
+insert into staff_skill values(00007,'problem solving');
+
+insert into artist values(100,'Amer','AmerARTIST@gmail.com','0554433665','collages');
+insert into artist values(200,'Asad','AsadARTIST@gmail.com','0557766546','Fine Art');
+insert into artist values(300,'Badr','BadrARTIST@gmail.com','0557894367','modern art');
+insert into artist values(400,'Bilal','BilalARTIST@gmail.com','0553322424','modern art');
+insert into artist values(500,'Faiz','FaizARTIST@gmail.com','0552234342','ancient art');
+insert into artist values(600,'Hamza','HamzaARTIST@gmail.com','0551234467','decorative art');
+insert into artist values(700,'Hazem','HazemARTIST@gmail.com','0554433656','collages');
+
+insert into painting values(30,03,100,160,60);
+insert into painting values(31,02,200,260,60);
+insert into painting values(32,04,300,100,50);
+insert into painting values(33,05,400,80,60);
+insert into painting values(34,05,500,60,60);
+insert into painting values(36,06,600,120,80);
+insert into painting values(37,07,700,120,40);
+insert into painting values(38,03,100,160,60);
+insert into painting values(39,02,200,260,60);
+insert into painting values(40,05,300,100,50);
+insert into painting values(41,05,400,80,60);
+insert into painting values(42,05,500,60,60);
+insert into painting values(43,06,600,120,80);
+insert into painting values(44,01,700,120,40);
+
+-- query to retrive data 
+
+-- using subquery to check the skill of staff member named Jawad
+select staff_id as id, skill 
+from staff_skill
+where staff_id = (select staff_id
+                  from staff
+                  where sname = 'Jawad');
+
+
+-- retrieving financial data in descending order
+select total, payment_method as "PAYMENT METHOD"
+from reservation
+order by total desc; 
+
+
+-- print the name of visitors to each gallery
+select g.gallery_id, g.gname,  v.vname
+from gallery g left outer join visitor v
+on g.gallery_id = v.gallery_id
+order by gallery_id asc; 
+
+
+-- print the number of paintings each artist have
+select artist_id, count(pnumber) as "Number of Paintings"
+from artist natural join painting
+group by artist_id
+order by artist_id; 
+
+-- print the names of the galleries with profit heigher than the average
+select gname as "Gallery Name", total
+from gallery join reservation
+on gallery.gallery_id = reservation.gallery_id
+where total > all(select avg(total)
+                  from reservation)
+order by total desc; 
+
+
+-- print phone number of visitors who payed using apple pay so we can send them cuppon to their sms
+select vphone
+from visitor join reservation 
+on visitor.visitor_id = reservation.visitor_id
+where payment_method = 'Apple pay'; 
+
+-- retrieve the minimum and maximum salary that this musuem institution offers to staff.
+select max(salary) as "maximum salary",min(salary) as "minimum salary"
+from staff ;
+
+-- procedures
+
+--show staff information and compare avearge salary for all staff in gallery and compare betwwen user enter salary 
+CREATE OR REPLACE PROCEDURE staff_sal(
+    p_staff IN staff.staff_id%TYPE
+)
+AS
+    gid            staff.gallery_id%TYPE;
+    s_name          staff.sname%TYPE;
+    s_salary        staff.salary%TYPE;
+    DB             staff.date_of_Birth%TYPE;
+    s_email         staff.semail%TYPE;
+    s_phone       staff.sphone%TYPE;
+    s_guess        s_salary%TYPE;
+BEGIN
+    select  gallery_id,sname,salary,date_of_Birth,semail,sphone
+         into gid,s_name,s_salary,DB,s_email,s_phone
+         from staff where  staff_id = p_staff;
+     DBMS_OUTPUT.PUT_LINE('STAFF  ID :' || p_staff );
+     DBMS_OUTPUT.PUT_LINE('which   gallery :' || gid );
+     DBMS_OUTPUT.PUT_LINE('STAFF  NAME :' || s_name );
+     DBMS_OUTPUT.PUT_LINE('STAFF  SALRAY :' || s_salary );
+     DBMS_OUTPUT.PUT_LINE('STAFF  BIRTH :' || DB );
+     DBMS_OUTPUT.PUT_LINE('STAFF  EMAIL :' || s_email );
+     DBMS_OUTPUT.PUT_LINE('STAFF  PHONE :' || s_phone );
+    
+    select AVG(salary) into s_guess
+            from staff where gallery_id=gid ;
+     if s_salary > s_guess then
+          DBMS_OUTPUT.PUT_LINE('Staff salay is greater than you enter:' ||s_guess);
+     else
+          DBMS_OUTPUT.PUT_LINE('Staff salay is lower than you enter:' ||s_guess);
+     end if;
+end;
+
+exec staff_sal (00002);
+
+-- here to print all deeatils about choosen painting
+CREATE OR REPLACE PROCEDURE painting_info(p_id in painting.pnumber%TYPE)
+AS
+BEGIN
+    FOR REC IN (SELECT gallery_id,artist_id,height,width from painting where pnumber=p_id ) LOOP
+    DBMS_OUTPUT.PUT_LINE('which gallery:'|| REC.gallery_id ||' '|| 'which artist:'|| REC.artist_id ||' '|| 'height:'||REC.height||' '||'width:'||REC.width||' ' );
+    end loop;
+exception when NO_DATA_FOUND THEN NULL;
+END;
+
+exec painting_info(36);
+
+
+--update procedure for viditor information
+CREATE OR REPLACE PROCEDURE updatevisitor(
+	   p_id IN visitor.visitor_id%TYPE,
+       p_name IN visitor.vname%TYPE,
+	   p_email IN visitor.vemail%TYPE,
+	   p_phone IN visitor.vphone%TYPE
+       )
+IS
+BEGIN
+
+  UPDATE visitor SET vname = p_name,vemail=p_email,vphone=p_phone where visitor_id = p_id;
+  
+  COMMIT;
+
+END;
+
+exec updatevisitor(100,'razan','razan@gmail.com',0541216773);
+select * from  visitor;
+
+
+
+
+-- CURSOR to check for attributes and compare total with input user and display all matches 
+CREATE OR REPLACE PROCEDURE totalR(evalute number)
+AS
+CURSOR executive IS 
+select res_no, total
+from reservation
+where total > evalute;
+begin
+for v_cursrec in executive loop
+DBMS_OUTPUT.PUT_LINE(v_cursrec.res_no|| '  '||v_cursrec.total);
+end loop;
+end totalR;
+
+exec totalR(15);
+
+--user enter reservation nomber that want to show total with tax
+CREATE OR REPLACE PROCEDURE tax(p_id IN reservation.res_no%TYPE)
+as
+begin
+FOR REC IN (SELECT total from reservation where res_no = p_id ) LOOP
+DBMS_OUTPUT.PUT_LINE('final total with tax:'||REC.total*1.05); 
+End Loop;  
+End;
+
+exec tax(1001);    
+
